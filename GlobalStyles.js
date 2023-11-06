@@ -7,7 +7,6 @@ export const FontFamily = {
 export const FontSize = {
   size_mini: 15,
   size_3xl: 22,
-  size_lg: 18,
   size_xl: 20,
 };
 /* Colors */

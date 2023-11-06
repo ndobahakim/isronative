@@ -1,6 +1,6 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Image } from "expo-image";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, Color, FontSize, Border } from "../GlobalStyles";
 
@@ -9,116 +9,106 @@ const Registration = () => {
 
   return (
     <View style={styles.registration}>
-      <Pressable
-        style={[styles.button, styles.text1Position]}
-        onPress={() => navigation.navigate("Dashboard")}
-      >
-        <View style={[styles.buttonChild, styles.childPosition]} />
-        <Text style={[styles.getStarted, styles.textTypo]}>Register</Text>
-      </Pressable>
-      <Image
-        style={[styles.shapeIcon, styles.shapeIconPosition]}
-        contentFit="cover"
-        source={require("../assets/shape1.png")}
-      />
-      <View style={styles.notification}>
+      <View style={[styles.frame, styles.frameLayout1]}>
         <Image
-          style={[styles.wifiIcon, styles.iconLayout]}
+          style={[styles.frameIcon, styles.frameLayout1]}
           contentFit="cover"
-          source={require("../assets/wifi1.png")}
+          source={require("../assets/frame.png")}
         />
-        <Image
-          style={[styles.batteryThreeQuartersIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/batterythreequarters.png")}
-        />
-        <Image
-          style={[styles.signalIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/signal.png")}
-        />
-        <Text style={[styles.text, styles.textTypo]}>9:41</Text>
+        <View style={[styles.text, styles.textLayout]}>
+          <Text style={[styles.welcomeOnboard, styles.getStartedTypo]}>
+            Welcome Onboard!
+          </Text>
+          <Text style={[styles.letsHelpYou, styles.letsHelpYouTypo]}>
+            Lets help you in completing your tasks
+          </Text>
+        </View>
       </View>
-      <View style={[styles.text1, styles.text1Position]}>
-        <Text style={[styles.welcomeOnboard, styles.textTypo]}>
-          Welcome Onboard!
-        </Text>
-        <Text style={[styles.letsHelpYou, styles.letsHelpYouTypo]}>
-          Lets help you in completing your tasks
-        </Text>
-      </View>
-      <Pressable
-        style={styles.alreadyHaveAnContainer}
-        onPress={() => navigation.navigate("Login")}
-      >
-        <Text style={styles.text2}>
-          <Text
-            style={styles.letsHelpYouTypo}
-          >{`Already have an account ? `}</Text>
-          <Text style={[styles.signIn, styles.textTypo]}>Sign In</Text>
-        </Text>
-      </Pressable>
-      <View style={[styles.input, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-          Mary Elliot
-        </Text>
-        <Text style={[styles.fullName, styles.fullNameTypo]}>Full name</Text>
-      </View>
-      <View style={[styles.input1, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-          mary.elliot@mail.com
-        </Text>
-        <Text style={[styles.fullName, styles.fullNameTypo]}>Email</Text>
-      </View>
-      <View style={[styles.input2, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-          **************
-        </Text>
-        <Text style={[styles.fullName, styles.fullNameTypo]}>Password</Text>
-      </View>
-      <View style={[styles.input3, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-          **************
-        </Text>
-        <Text style={[styles.fullName, styles.fullNameTypo]}>
-          Confirm Password
-        </Text>
+      <View style={[styles.frame1, styles.textLayout]}>
+        <View style={[styles.input, styles.inputLayout]}>
+          <View style={styles.inputChild} />
+          <View style={[styles.frame2, styles.frameLayout]}>
+            <Text style={[styles.maryElliot, styles.text1Typo]}>
+              Mary Elliot
+            </Text>
+          </View>
+          <View style={[styles.frame3, styles.frameLayout]}>
+            <Text style={[styles.fullName, styles.fullNameClr]}>Full name</Text>
+          </View>
+        </View>
+        <View style={[styles.input1, styles.inputLayout]}>
+          <View style={styles.inputChild} />
+          <View style={[styles.frame2, styles.frameLayout]}>
+            <Text style={[styles.maryElliot, styles.text1Typo]}>
+              mary.elliot@mail.com
+            </Text>
+          </View>
+          <View style={[styles.frame3, styles.frameLayout]}>
+            <Text style={[styles.fullName, styles.fullNameClr]}>Email</Text>
+          </View>
+        </View>
+        <View style={[styles.input2, styles.inputLayout]}>
+          <View style={styles.inputChild} />
+          <View style={[styles.frame2, styles.frameLayout]}>
+            <Text style={[styles.maryElliot, styles.text1Typo]}>
+              **************
+            </Text>
+          </View>
+          <View style={[styles.frame3, styles.frameLayout]}>
+            <Text style={[styles.fullName, styles.fullNameClr]}>Password</Text>
+          </View>
+        </View>
+        <View style={[styles.input3, styles.inputLayout]}>
+          <View style={styles.inputChild} />
+          <View style={[styles.frame2, styles.frameLayout]}>
+            <Text style={[styles.maryElliot, styles.text1Typo]}>
+              **************
+            </Text>
+          </View>
+          <View style={[styles.frame3, styles.frameLayout]}>
+            <Text style={[styles.fullName, styles.fullNameClr]}>
+              Confirm Password
+            </Text>
+          </View>
+        </View>
+        <View style={[styles.frame10, styles.frameLayout]}>
+          <Pressable
+            style={styles.alreadyHaveAnContainer}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text style={styles.text1Typo}>
+              <Text
+                style={styles.letsHelpYouTypo}
+              >{`Already have an account ? `}</Text>
+              <Text style={styles.signIn}>Sign In</Text>
+            </Text>
+          </Pressable>
+        </View>
+        <Pressable
+          style={[styles.button, styles.textLayout]}
+          onPress={() => navigation.navigate("Dashboard")}
+        >
+          <Text style={[styles.getStarted, styles.fullNameClr]}>Register</Text>
+        </Pressable>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  text1Position: {
-    left: 20,
+  frameLayout1: {
+    width: 421,
+    position: "absolute",
+    overflow: "hidden",
+  },
+  textLayout: {
     width: 335,
     position: "absolute",
   },
-  childPosition: {
-    left: "0%",
-    position: "absolute",
-  },
-  textTypo: {
+  getStartedTypo: {
+    textAlign: "center",
     fontFamily: FontFamily.poppinsBold,
     fontWeight: "700",
-  },
-  shapeIconPosition: {
-    left: 0,
-    position: "absolute",
-  },
-  iconLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    bottom: "11.11%",
-    top: "7.41%",
-    width: "6.88%",
-    height: "81.48%",
-    position: "absolute",
-    overflow: "hidden",
   },
   letsHelpYouTypo: {
     color: Color.colorGray_300,
@@ -127,77 +117,27 @@ const styles = StyleSheet.create({
   },
   inputLayout: {
     height: 73,
+    left: 0,
     width: 335,
-    left: 20,
     position: "absolute",
   },
-  fullNameTypo: {
-    left: "5.67%",
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
+  frameLayout: {
+    height: 23,
+    position: "absolute",
+    overflow: "hidden",
+  },
+  text1Typo: {
+    textAlign: "left",
     fontSize: FontSize.size_mini,
-    textAlign: "left",
-    position: "absolute",
   },
-  buttonChild: {
-    height: "100%",
-    borderRadius: Border.br_8xs,
-    backgroundColor: Color.colorMediumturquoise_100,
-    bottom: "0%",
-    left: "0%",
-    right: "0%",
-    width: "100%",
-    top: "0%",
-  },
-  getStarted: {
-    top: "25%",
-    left: "37.31%",
-    fontSize: FontSize.size_xl,
-    textAlign: "center",
+  fullNameClr: {
     color: Color.colorBlack,
     position: "absolute",
   },
-  button: {
-    top: 668,
-    height: 60,
-    width: 335,
-  },
-  shapeIcon: {
-    width: 254,
+  frameIcon: {
+    top: 94,
+    left: 66,
     height: 228,
-    top: 0,
-  },
-  wifiIcon: {
-    right: "8.04%",
-    left: "85.08%",
-  },
-  batteryThreeQuartersIcon: {
-    left: "93.12%",
-    right: "0%",
-    maxWidth: "100%",
-    bottom: "11.11%",
-    top: "7.41%",
-    width: "6.88%",
-    height: "81.48%",
-  },
-  signalIcon: {
-    right: "16.17%",
-    left: "76.95%",
-  },
-  text: {
-    fontSize: FontSize.size_lg,
-    textAlign: "left",
-    color: Color.colorBlack,
-    left: "0%",
-    position: "absolute",
-    top: "0%",
-  },
-  notification: {
-    top: 8,
-    left: 35,
-    width: 320,
-    height: 27,
-    position: "absolute",
   },
   welcomeOnboard: {
     left: 17,
@@ -206,63 +146,114 @@ const styles = StyleSheet.create({
     width: 305,
     opacity: 0.9,
     top: 0,
-    textAlign: "center",
     position: "absolute",
   },
   letsHelpYou: {
     top: 41,
     fontSize: FontSize.size_mini,
+    color: Color.colorGray_300,
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
     left: 0,
-    position: "absolute",
     textAlign: "center",
     width: 335,
-  },
-  text1: {
-    top: 183,
-    height: 64,
-    width: 335,
-  },
-  signIn: {
-    color: Color.colorMediumturquoise_100,
-  },
-  text2: {
-    fontSize: FontSize.size_mini,
-    textAlign: "left",
-  },
-  alreadyHaveAnContainer: {
-    left: 58,
-    top: 738,
     position: "absolute",
+  },
+  text: {
+    top: 277,
+    left: 86,
+    height: 64,
+  },
+  frame: {
+    top: -94,
+    left: -66,
+    height: 341,
   },
   inputChild: {
     height: "68.49%",
     top: "31.51%",
-    borderRadius: Border.br_xl,
-    backgroundColor: Color.colorWhite,
+    right: "0%",
     bottom: "0%",
     left: "0%",
-    right: "0%",
+    borderRadius: Border.br_xl,
+    backgroundColor: Color.colorWhite,
+    position: "absolute",
     width: "100%",
   },
   maryElliot: {
-    top: "49.32%",
+    left: "19.39%",
     color: Color.colorGray_100,
+    top: "0%",
+    textAlign: "left",
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
+    position: "absolute",
+  },
+  frame2: {
+    top: 36,
+    width: 98,
+    left: 0,
   },
   fullName: {
-    color: Color.colorBlack,
+    left: "20.21%",
+    textAlign: "left",
+    fontSize: FontSize.size_mini,
     top: "0%",
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
+  },
+  frame3: {
+    width: 94,
+    left: 0,
+    top: 0,
   },
   input: {
-    top: 297,
+    top: 0,
   },
   input1: {
-    top: 380,
+    top: 83,
   },
   input2: {
-    top: 463,
+    top: 166,
   },
   input3: {
-    top: 546,
+    top: 249,
+  },
+  signIn: {
+    color: Color.colorMediumturquoise_100,
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+  },
+  alreadyHaveAnContainer: {
+    left: 0,
+    top: 0,
+    position: "absolute",
+  },
+  frame10: {
+    top: 441,
+    left: 38,
+    width: 297,
+  },
+  getStarted: {
+    top: "25%",
+    left: "37.31%",
+    fontSize: FontSize.size_xl,
+    textAlign: "center",
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+  },
+  button: {
+    top: 371,
+    borderRadius: Border.br_8xs,
+    backgroundColor: Color.colorMediumturquoise_100,
+    height: 60,
+    left: 0,
+  },
+  frame1: {
+    top: 297,
+    left: 20,
+    height: 464,
+    overflow: "hidden",
   },
   registration: {
     borderRadius: Border.br_31xl,

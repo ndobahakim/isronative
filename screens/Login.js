@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { Text, StyleSheet, View, Pressable } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, Color, FontSize, Border } from "../GlobalStyles";
@@ -13,7 +13,6 @@ const Login = () => {
         style={styles.button}
         onPress={() => navigation.navigate("Dashboard")}
       >
-        <View style={[styles.buttonChild, styles.childPosition]} />
         <Text style={[styles.getStarted, styles.getStartedTypo]}>Login</Text>
       </Pressable>
       <Image
@@ -21,24 +20,6 @@ const Login = () => {
         contentFit="cover"
         source={require("../assets/shape1.png")}
       />
-      <View style={styles.notification}>
-        <Image
-          style={[styles.wifiIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={[styles.batteryThreeQuartersIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/batterythreequarters.png")}
-        />
-        <Image
-          style={[styles.signalIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/signal.png")}
-        />
-        <Text style={styles.text}>9:41</Text>
-      </View>
       <Text style={[styles.welcomeBack, styles.getStartedTypo]}>
         Welcome Back!
       </Text>
@@ -46,7 +27,7 @@ const Login = () => {
         style={styles.dontHaveAnContainer}
         onPress={() => navigation.navigate("Registration")}
       >
-        <Text style={styles.text1Typo}>
+        <Text style={styles.textTypo}>
           <Text style={styles.dontHaveAn}>{`Don’t have an account ? `}</Text>
           <Text style={styles.signUpTypo}>Sign Up</Text>
         </Text>
@@ -55,18 +36,26 @@ const Login = () => {
         Forgot Password?
       </Text>
       <View style={[styles.input, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-          mary.elliot@mail.com
-        </Text>
-        <Text style={[styles.fullName, styles.fullNameTypo]}>Email</Text>
+        <View style={styles.inputChild} />
+        <View style={[styles.frame, styles.framePosition]}>
+          <Text style={[styles.maryElliot, styles.fullNameTypo]}>
+            mary.elliot@mail.com
+          </Text>
+        </View>
+        <View style={[styles.frame1, styles.framePosition]}>
+          <Text style={[styles.fullName, styles.fullNameTypo]}>Email</Text>
+        </View>
       </View>
       <View style={[styles.input1, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-          **************
-        </Text>
-        <Text style={[styles.fullName, styles.fullNameTypo]}>Password</Text>
+        <View style={styles.inputChild} />
+        <View style={[styles.frame, styles.framePosition]}>
+          <Text style={[styles.maryElliot, styles.fullNameTypo]}>
+            **************
+          </Text>
+        </View>
+        <View style={[styles.frame1, styles.framePosition]}>
+          <Text style={[styles.fullName, styles.fullNameTypo]}>Password</Text>
+        </View>
       </View>
       <Image
         style={styles.undrawAccessAccountRe8spmIcon}
@@ -78,28 +67,11 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
-  childPosition: {
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    position: "absolute",
-    width: "100%",
-  },
   getStartedTypo: {
     textAlign: "center",
     fontFamily: FontFamily.poppinsBold,
     fontWeight: "700",
     position: "absolute",
-  },
-  iconLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    bottom: "11.11%",
-    top: "7.41%",
-    width: "6.88%",
-    height: "81.48%",
-    position: "absolute",
-    overflow: "hidden",
   },
   signUpTypo: {
     color: Color.colorMediumturquoise_100,
@@ -112,19 +84,19 @@ const styles = StyleSheet.create({
     width: 335,
     position: "absolute",
   },
+  framePosition: {
+    height: 23,
+    left: 0,
+    position: "absolute",
+    overflow: "hidden",
+  },
   fullNameTypo: {
-    left: "5.67%",
+    top: "0%",
     fontFamily: FontFamily.poppinsSemiBold,
     fontWeight: "600",
-    fontSize: FontSize.size_mini,
     textAlign: "left",
+    fontSize: FontSize.size_mini,
     position: "absolute",
-  },
-  buttonChild: {
-    height: "100%",
-    borderRadius: Border.br_8xs,
-    backgroundColor: Color.colorMediumturquoise_100,
-    top: "0%",
   },
   getStarted: {
     top: "25%",
@@ -135,49 +107,17 @@ const styles = StyleSheet.create({
   button: {
     top: 668,
     left: 20,
+    borderRadius: Border.br_8xs,
+    backgroundColor: Color.colorMediumturquoise_100,
     height: 60,
     width: 335,
     position: "absolute",
   },
   shapeIcon: {
-    top: 0,
-    left: 0,
     width: 254,
     height: 228,
-    position: "absolute",
-  },
-  wifiIcon: {
-    right: "8.04%",
-    left: "85.08%",
-  },
-  batteryThreeQuartersIcon: {
-    left: "93.12%",
-    right: "0%",
-    maxWidth: "100%",
-    bottom: "11.11%",
-    top: "7.41%",
-    width: "6.88%",
-    height: "81.48%",
-  },
-  signalIcon: {
-    right: "16.17%",
-    left: "76.95%",
-  },
-  text: {
-    fontSize: FontSize.size_lg,
-    textAlign: "left",
-    color: Color.colorBlack,
-    fontFamily: FontFamily.poppinsBold,
-    fontWeight: "700",
-    left: "0%",
-    top: "0%",
-    position: "absolute",
-  },
-  notification: {
-    top: 8,
-    left: 35,
-    width: 320,
-    height: 27,
+    left: 0,
+    top: 0,
     position: "absolute",
   },
   welcomeBack: {
@@ -193,9 +133,9 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsSemiBold,
     fontWeight: "600",
   },
-  text1Typo: {
-    fontSize: FontSize.size_mini,
+  textTypo: {
     textAlign: "left",
+    fontSize: FontSize.size_mini,
   },
   dontHaveAnContainer: {
     left: 65,
@@ -205,23 +145,37 @@ const styles = StyleSheet.create({
   forgotPassword: {
     top: 579,
     left: 207,
-    fontSize: FontSize.size_mini,
     textAlign: "left",
+    fontSize: FontSize.size_mini,
     position: "absolute",
   },
   inputChild: {
     height: "68.49%",
     top: "31.51%",
+    right: "0%",
+    bottom: "0%",
+    left: "0%",
     borderRadius: Border.br_xl,
     backgroundColor: Color.colorWhite,
+    position: "absolute",
+    width: "100%",
   },
   maryElliot: {
-    top: "49.32%",
+    left: "19.39%",
     color: Color.colorGray_100,
   },
+  frame: {
+    top: 36,
+    width: 98,
+  },
   fullName: {
+    left: "20.21%",
     color: Color.colorBlack,
-    top: "0%",
+  },
+  frame1: {
+    width: 94,
+    top: 0,
+    height: 23,
   },
   input: {
     top: 413,

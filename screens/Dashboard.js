@@ -1,129 +1,120 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
-import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 const Dashboard = () => {
   return (
     <View style={styles.dashboard}>
-      <View style={[styles.dashboardChild, styles.shapeIconPosition]} />
-      <Image
-        style={[styles.shapeIcon, styles.shapeIconPosition]}
-        contentFit="cover"
-        source={require("../assets/shape.png")}
-      />
-      <View style={styles.notification}>
-        <Image
-          style={[styles.wifiIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={[styles.batteryThreeQuartersIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/batterythreequarters.png")}
-        />
-        <Image
-          style={[styles.signalIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/signal.png")}
-        />
-        <Text style={styles.text}>9:41</Text>
-      </View>
-      <Image
-        style={styles.dashboardItem}
-        contentFit="cover"
-        source={require("../assets/ellipse-479.png")}
-      />
-      <Text style={[styles.welcomeMary, styles.tasksListTypo]}>
-        Welcome Mary!
-      </Text>
       <Text style={[styles.tasksList, styles.tasksListTypo]}>Tasks List</Text>
       <Image
-        style={[styles.dashboardInner, styles.iconLayout]}
+        style={[styles.dashboardChild, styles.dashboardChildLayout]}
         contentFit="cover"
         source={require("../assets/group-162.png")}
       />
-      <View style={styles.dailyTasksParent}>
-        <Text style={[styles.dailyTasks, styles.dailyTasksTypo]}>
-          Daily Tasks
-        </Text>
+      <View style={styles.frame}>
+        <View style={[styles.frameChild, styles.shapeIconPosition]} />
         <Image
-          style={[styles.plusCircleIcon, styles.iconLayout]}
+          style={[styles.shapeIcon, styles.shapeIconPosition]}
           contentFit="cover"
-          source={require("../assets/plus-circle.png")}
+          source={require("../assets/shape.png")}
         />
-        <View
-          style={[styles.learnProgrammingBy12amParent, styles.parentPosition]}
-        >
-          <Text style={[styles.learnProgrammingBy, styles.dailyTasksTypo]}>
-            Learn programming by 12am
-          </Text>
-          <View style={[styles.frameChild, styles.frameLayout]} />
-        </View>
-        <View style={[styles.haveLunchAt3pmParent, styles.parentPosition]}>
-          <Text style={[styles.learnProgrammingBy, styles.dailyTasksTypo]}>
-            Have lunch at 3pm
-          </Text>
-          <View style={[styles.frameItem, styles.frameLayout]} />
-        </View>
-        <View style={[styles.learnHowToCookBy1pmParent, styles.parentPosition]}>
-          <Text style={[styles.learnProgrammingBy, styles.dailyTasksTypo]}>
-            Learn how to cook by 1pm
-          </Text>
-          <View style={[styles.frameItem, styles.frameLayout]} />
-        </View>
-        <View style={[styles.goVisitMumBy4pmParent, styles.parentPosition]}>
-          <Text style={[styles.learnProgrammingBy, styles.dailyTasksTypo]}>
+        <Image
+          style={styles.frameItem}
+          contentFit="cover"
+          source={require("../assets/ellipse-479.png")}
+        />
+        <Text style={[styles.welcomeMary, styles.tasksListTypo]}>
+          Welcome Mary!
+        </Text>
+      </View>
+      <View style={[styles.frameParent, styles.parentPosition1]}>
+        <View style={[styles.goVisitMumBy4pmParent, styles.parentPosition1]}>
+          <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
             Go visit mum by4pm
           </Text>
-          <View style={[styles.frameItem, styles.frameLayout]} />
+          <View style={[styles.frameInner, styles.frameInnerLayout]} />
         </View>
-        <View style={[styles.pickUpTheKidsBy2pmParent, styles.parentPosition]}>
-          <Text style={[styles.learnProgrammingBy, styles.dailyTasksTypo]}>
-            Pick up the kids by 2pm
+        <View style={[styles.frame1, styles.framePosition]}>
+          <Text style={[styles.dailyTasks, styles.parentPosition]}>
+            Daily Tasks
           </Text>
-          <View style={[styles.frameItem, styles.frameLayout]} />
+          <Image
+            style={[styles.plusCircleIcon, styles.dashboardChildLayout]}
+            contentFit="cover"
+            source={require("../assets/plus-circle.png")}
+          />
         </View>
-        <View style={styles.frameChild2} />
+        <View style={[styles.frame2, styles.framePosition]}>
+          <View
+            style={[styles.learnProgrammingBy12amParent, styles.parentPosition]}
+          >
+            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
+              Learn programming by 12am
+            </Text>
+            <View style={[styles.rectangleView, styles.frameInnerLayout]} />
+          </View>
+          <View style={[styles.haveLunchAt3pmParent, styles.parentPosition]}>
+            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
+              Have lunch at 3pm
+            </Text>
+            <View style={[styles.frameInner, styles.frameInnerLayout]} />
+          </View>
+          <View
+            style={[styles.learnHowToCookBy1pmParent, styles.parentPosition]}
+          >
+            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
+              Learn how to cook by 1pm
+            </Text>
+            <View style={[styles.frameInner, styles.frameInnerLayout]} />
+          </View>
+          <View
+            style={[styles.pickUpTheKidsBy2pmParent, styles.parentPosition]}
+          >
+            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
+              Pick up the kids by 2pm
+            </Text>
+            <View style={[styles.frameInner, styles.frameInnerLayout]} />
+          </View>
+          <View style={styles.frameChild4} />
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  shapeIconPosition: {
-    left: 0,
-    top: 0,
+  tasksListTypo: {
+    opacity: 0.9,
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+    fontSize: FontSize.size_3xl,
     position: "absolute",
   },
-  iconLayout: {
+  dashboardChildLayout: {
     maxHeight: "100%",
     maxWidth: "100%",
     position: "absolute",
     overflow: "hidden",
   },
-  tasksListTypo: {
-    opacity: 0.9,
-    fontSize: FontSize.size_3xl,
-    fontFamily: FontFamily.poppinsBold,
-    fontWeight: "700",
+  shapeIconPosition: {
+    left: 66,
+    top: 94,
     position: "absolute",
   },
-  dailyTasksTypo: {
+  parentPosition1: {
+    left: 21,
+    position: "absolute",
+  },
+  goVisitMumTypo: {
     color: Color.colorGray_300,
+    top: 0,
     opacity: 0.9,
     textAlign: "left",
     fontFamily: FontFamily.poppinsBold,
     fontWeight: "700",
-    position: "absolute",
   },
-  parentPosition: {
-    height: 23,
-    left: 21,
-    position: "absolute",
-  },
-  frameLayout: {
+  frameInnerLayout: {
     height: 17,
     width: 17,
     borderWidth: 2,
@@ -133,7 +124,35 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
+  framePosition: {
+    width: 296,
+    left: 21,
+    position: "absolute",
+    overflow: "hidden",
+  },
+  parentPosition: {
+    left: 0,
+    position: "absolute",
+  },
+  tasksList: {
+    top: 484,
+    left: 20,
+    color: Color.colorGray_200,
+    textAlign: "left",
+    opacity: 0.9,
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+    fontSize: FontSize.size_3xl,
+  },
   dashboardChild: {
+    height: "15.59%",
+    width: "33.89%",
+    top: "41.87%",
+    right: "33.31%",
+    bottom: "42.54%",
+    left: "32.8%",
+  },
+  frameChild: {
     backgroundColor: Color.colorMediumturquoise_100,
     width: 375,
     height: 292,
@@ -142,133 +161,104 @@ const styles = StyleSheet.create({
     width: 254,
     height: 228,
   },
-  wifiIcon: {
-    right: "8.04%",
-    left: "85.08%",
-    bottom: "11.11%",
-    top: "7.41%",
-    width: "6.88%",
-    height: "81.48%",
-    maxWidth: "100%",
-  },
-  batteryThreeQuartersIcon: {
-    right: "0%",
-    left: "93.12%",
-    bottom: "11.11%",
-    top: "7.41%",
-    width: "6.88%",
-    height: "81.48%",
-    maxWidth: "100%",
-  },
-  signalIcon: {
-    right: "16.17%",
-    left: "76.95%",
-    bottom: "11.11%",
-    top: "7.41%",
-    width: "6.88%",
-    height: "81.48%",
-    maxWidth: "100%",
-  },
-  text: {
-    top: "0%",
-    left: "0%",
-    fontSize: FontSize.size_lg,
-    color: Color.colorBlack,
-    textAlign: "left",
-    fontFamily: FontFamily.poppinsBold,
-    fontWeight: "700",
-    position: "absolute",
-  },
-  notification: {
-    top: 8,
-    width: 320,
-    height: 27,
-    left: 35,
-    position: "absolute",
-  },
-  dashboardItem: {
-    top: 134,
-    left: 138,
+  frameItem: {
+    top: 228,
+    left: 204,
     width: 100,
     height: 100,
     position: "absolute",
   },
   welcomeMary: {
-    top: 244,
+    top: 338,
+    left: 101,
     color: Color.colorWhite,
     textAlign: "center",
     width: 305,
-    left: 35,
+    opacity: 0.9,
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+    fontSize: FontSize.size_3xl,
   },
-  tasksList: {
-    top: 484,
-    left: 20,
-    color: Color.colorGray_200,
-    textAlign: "left",
+  frame: {
+    top: -94,
+    left: -66,
+    width: 441,
+    height: 386,
+    position: "absolute",
+    overflow: "hidden",
   },
-  dashboardInner: {
-    height: "15.59%",
-    width: "33.89%",
-    top: "41.87%",
-    right: "33.31%",
-    bottom: "42.54%",
-    left: "32.8%",
-  },
-  dailyTasks: {
-    top: 12,
-    fontSize: 17,
-    left: 21,
-  },
-  plusCircleIcon: {
-    height: "8.46%",
-    width: "6.57%",
-    top: "5.38%",
-    right: "5.07%",
-    bottom: "86.15%",
-    left: "88.36%",
-  },
-  learnProgrammingBy: {
+  goVisitMum: {
     left: 28,
     fontSize: FontSize.size_mini,
-    top: 0,
-    color: Color.colorGray_300,
+    position: "absolute",
   },
-  frameChild: {
-    backgroundColor: "#56c5b6",
-  },
-  learnProgrammingBy12amParent: {
-    top: 63,
-    width: 250,
-  },
-  frameItem: {
+  frameInner: {
     backgroundColor: Color.colorWhite,
-  },
-  haveLunchAt3pmParent: {
-    top: 162,
-    width: 173,
-  },
-  learnHowToCookBy1pmParent: {
-    top: 96,
-    width: 225,
   },
   goVisitMumBy4pmParent: {
     top: 195,
     width: 189,
+    height: 23,
+  },
+  dailyTasks: {
+    fontSize: 17,
+    color: Color.colorGray_300,
+    top: 0,
+    opacity: 0.9,
+    textAlign: "left",
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+  },
+  plusCircleIcon: {
+    height: "84.62%",
+    width: "7.09%",
+    top: "7.69%",
+    right: "0%",
+    bottom: "7.69%",
+    left: "92.91%",
+  },
+  frame1: {
+    top: 12,
+    height: 26,
+  },
+  rectangleView: {
+    backgroundColor: "#56c5b6",
+  },
+  learnProgrammingBy12amParent: {
+    width: 250,
+    top: 0,
+    left: 0,
+    height: 23,
+  },
+  haveLunchAt3pmParent: {
+    top: 99,
+    width: 173,
+    height: 23,
+  },
+  learnHowToCookBy1pmParent: {
+    top: 33,
+    width: 225,
+    height: 23,
   },
   pickUpTheKidsBy2pmParent: {
-    top: 129,
+    top: 66,
     width: 209,
+    height: 23,
   },
-  frameChild2: {
-    top: 73,
-    left: 314,
+  frameChild4: {
+    top: 10,
+    left: 293,
     borderRadius: 3,
     backgroundColor: "#d9d9d9",
     width: 3,
     height: 96,
     position: "absolute",
   },
-  dailyTasksParent: {
+  frame2: {
+    top: 63,
+    height: 122,
+  },
+  frameParent: {
     top: 529,
     borderRadius: 10,
     shadowColor: "rgba(0, 0, 0, 0.25)",
@@ -282,8 +272,6 @@ const styles = StyleSheet.create({
     width: 335,
     height: 260,
     backgroundColor: Color.colorWhite,
-    left: 21,
-    position: "absolute",
   },
   dashboard: {
     borderRadius: Border.br_31xl,
