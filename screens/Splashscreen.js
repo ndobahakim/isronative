@@ -16,7 +16,7 @@ const Splashscreen = () => {
         <Text style={[styles.getStarted, styles.getTypo]}>Get Started</Text>
       </Pressable>
       <View style={styles.text}>
-        <Text style={[styles.getThingsDone, styles.shapeIconPosition]}>
+        <Text style={[styles.getThingsDone]}>
           Get things done with TODO
         </Text>
         <Text style={styles.loremIpsumDolor}>
@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   shapeIconPosition: {
-    left: 0,
-    top: 0,
     position: "absolute",
+    top: -60,
+    left: -60
   },
   getStarted: {
     top: "25%",
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   shapeIcon: {
-    width: 254,
-    height: 228,
+    width: 200,
+    height: 180,
   },
   splashscreen: {
     borderRadius: Border.br_31xl,

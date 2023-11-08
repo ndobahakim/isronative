@@ -6,9 +6,19 @@ import Dashboard from "./screens/Dashboard";
 import Login from "./screens/Login";
 import Registration from "./screens/Registration";
 import Splashscreen from "./screens/Splashscreen";
-
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import authReducer from './reducers/authReducer';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { ScrollView } from 'react-native'
+
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+});
+
+const store = createStore(rootReducer);
+
 
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
@@ -23,34 +33,34 @@ const App = () => {
   }
 
   return (
-    <>
+    <Provider store={store}>
       <NavigationContainer>
         {hideSplashScreen ? (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-              name="Dashboard"
-              component={Dashboard}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Registration"
-              component={Registration}
-              options={{ headerShown: false }}
-            />
             <Stack.Screen
               name="Splashscreen"
               component={Splashscreen}
               options={{ headerShown: false }}
             />
+             <Stack.Screen
+              name="Registration"
+              component={Registration}
+              options={{ headerShown: false }}
+            />
+             <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Dashboard"
+              component={Dashboard}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         ) : null}
       </NavigationContainer>
-    </>
+    </Provider>
   );
 };
 export default App;

@@ -1,265 +1,215 @@
 import * as React from "react";
-import { Text, StyleSheet, View } from "react-native";
-import { Image } from "expo-image";
-import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import { Text, StyleSheet, View, Image, TouchableOpacity, Alert, ScrollView } from "react-native";
+import { FontFamily, FontSize, Color } from "../GlobalStyles";
+import { connect } from 'react-redux'
+import axios from 'axios'
 
-const Dashboard = () => {
+const Dashboard = ({ user, token }) => {
+   const [tasks, setTasks] = React.useState([]);
+  
+  const fetchData = async (authToken) => {
+    const apiUrl = 'http://test.ecoforest.green/api/v1/todo/get-todos/';
+      try {
+      const response = await axios.get(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      if (response.data.status === 'success') {
+        setTasks([...response.data.todos])
+        return response.data.todos;
+      } else {
+        return [];
+      }
+    } catch (error) {
+      return [];
+    }
+  }
+  React.useEffect(() => {
+    fetchData(token)
+  }, [])
+async function postTodo(authToken, task) {
+  const apiUrl = 'http://test.ecoforest.green/api/v1/todo/add-todo';
+  console.log(authToken, task)
+
+  try {
+    const response = await axios.post(apiUrl, { ...task }, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (response.data.status === "success") {
+      return response.data;
+    } else {
+      console.log(response.data)
+      return null;
+    }
+  } catch (error) {
+    console.log(error.response.data)
+    console.error('Error posting todo:', error);
+    return null;
+  }
+}
+
+  const addNewTask = () => {
+    Alert.prompt(
+      "Add a New Task",
+      "Enter the task description:",
+      async (text) => {
+        if (text) {
+          console.log(text)
+          const newTask = { task: text, completed: false };
+          await postTodo(token, newTask)
+          setTasks([newTask, ...tasks]);
+        }
+      }
+    );
+  };
+
+  async function updateTodoStatus(todoId, completed, authToken) {
+    const apiUrl = `http://test.ecoforest.green/api/v1/todo/${todoId}/completed/${completed}`;
+
+    try {
+      const response = await axios.put(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
+      
+      if (response.data.success === "success") {
+        return response.data;
+      } else {
+        console.error(`Request failed with status code ${response.status}`);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error updating todo status:', error);
+      return null;
+  }
+}
+  const toggleTaskCompletion = async (taskId, completed) => {
+    await updateTodoStatus(taskId, !completed, token)
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
+
+  const renderChecklist = () => {
+    return tasks.map((task) => (
+      <TouchableOpacity
+        key={task.id}
+        style={styles.taskParent}
+        onPress={() => toggleTaskCompletion(task.id, task.completed, token)}
+      >
+        <View style={[styles.checkbox, task.completed && styles.checkedCheckbox]} />
+        <Text style={[styles.taskText, task.completed && styles.completedTaskText]}>
+          {task.task}
+        </Text>
+      </TouchableOpacity>
+    ));
+  };
+
   return (
-    <View style={styles.dashboard}>
-      <Text style={[styles.tasksList, styles.tasksListTypo]}>Tasks List</Text>
-      <Image
-        style={[styles.dashboardChild, styles.dashboardChildLayout]}
-        contentFit="cover"
-        source={require("../assets/group-162.png")}
-      />
+    <ScrollView style={styles.dashboard}>
       <View style={styles.frame}>
-        <View style={[styles.frameChild, styles.shapeIconPosition]} />
+        <View style={styles.frameChild} />
         <Image
-          style={[styles.shapeIcon, styles.shapeIconPosition]}
-          contentFit="cover"
+          style={styles.shapeIcon}
+          contentFit="contain"
           source={require("../assets/shape.png")}
         />
         <Image
           style={styles.frameItem}
-          contentFit="cover"
+          contentFit="contain"
           source={require("../assets/ellipse-479.png")}
         />
-        <Text style={[styles.welcomeMary, styles.tasksListTypo]}>
-          Welcome Mary!
-        </Text>
+        <Text style={styles.welcomeMary}>Welcome Mary!</Text>
       </View>
-      <View style={[styles.frameParent, styles.parentPosition1]}>
-        <View style={[styles.goVisitMumBy4pmParent, styles.parentPosition1]}>
-          <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
-            Go visit mum by4pm
-          </Text>
-          <View style={[styles.frameInner, styles.frameInnerLayout]} />
-        </View>
-        <View style={[styles.frame1, styles.framePosition]}>
-          <Text style={[styles.dailyTasks, styles.parentPosition]}>
-            Daily Tasks
-          </Text>
+      <Image
+        style={styles.dashboardChild}
+        contentFit="contain"
+        source={require("../assets/group-162.png")}
+      />
+      <Text style={styles.tasksList}>Tasks List</Text>
+      <View style={styles.frameParent}>
+        <View style={styles.frame1}>
+          <Text style={styles.dailyTasks}>Daily Tasks</Text>
+          <TouchableOpacity onPress={addNewTask}>
           <Image
-            style={[styles.plusCircleIcon, styles.dashboardChildLayout]}
+            style={styles.plusCircleIcon}
             contentFit="cover"
             source={require("../assets/plus-circle.png")}
           />
+          </TouchableOpacity>
         </View>
-        <View style={[styles.frame2, styles.framePosition]}>
-          <View
-            style={[styles.learnProgrammingBy12amParent, styles.parentPosition]}
-          >
-            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
-              Learn programming by 12am
-            </Text>
-            <View style={[styles.rectangleView, styles.frameInnerLayout]} />
-          </View>
-          <View style={[styles.haveLunchAt3pmParent, styles.parentPosition]}>
-            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
-              Have lunch at 3pm
-            </Text>
-            <View style={[styles.frameInner, styles.frameInnerLayout]} />
-          </View>
-          <View
-            style={[styles.learnHowToCookBy1pmParent, styles.parentPosition]}
-          >
-            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
-              Learn how to cook by 1pm
-            </Text>
-            <View style={[styles.frameInner, styles.frameInnerLayout]} />
-          </View>
-          <View
-            style={[styles.pickUpTheKidsBy2pmParent, styles.parentPosition]}
-          >
-            <Text style={[styles.goVisitMum, styles.goVisitMumTypo]}>
-              Pick up the kids by 2pm
-            </Text>
-            <View style={[styles.frameInner, styles.frameInnerLayout]} />
-          </View>
-          <View style={styles.frameChild4} />
-        </View>
+          <View style={styles.frame2}>{renderChecklist()}</View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  tasksListTypo: {
-    opacity: 0.9,
-    fontFamily: FontFamily.poppinsBold,
-    fontWeight: "700",
-    fontSize: FontSize.size_3xl,
-    position: "absolute",
-  },
-  dashboardChildLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    position: "absolute",
-    overflow: "hidden",
-  },
-  shapeIconPosition: {
-    left: 66,
-    top: 94,
-    position: "absolute",
-  },
-  parentPosition1: {
-    left: 21,
-    position: "absolute",
-  },
-  goVisitMumTypo: {
-    color: Color.colorGray_300,
-    top: 0,
-    opacity: 0.9,
-    textAlign: "left",
-    fontFamily: FontFamily.poppinsBold,
-    fontWeight: "700",
-  },
-  frameInnerLayout: {
-    height: 17,
-    width: 17,
-    borderWidth: 2,
-    borderColor: Color.colorBlack,
-    borderStyle: "solid",
-    top: 3,
-    left: 0,
-    position: "absolute",
-  },
-  framePosition: {
-    width: 296,
-    left: 21,
-    position: "absolute",
-    overflow: "hidden",
-  },
-  parentPosition: {
-    left: 0,
-    position: "absolute",
-  },
   tasksList: {
-    top: 484,
-    left: 20,
-    color: Color.colorGray_200,
-    textAlign: "left",
-    opacity: 0.9,
     fontFamily: FontFamily.poppinsBold,
     fontWeight: "700",
     fontSize: FontSize.size_3xl,
+    color: Color.colorGray_200,
+    alignSelf: "flex-start",
+    padding: 25,
+    overflow: 'scroll'
   },
   dashboardChild: {
-    height: "15.59%",
-    width: "33.89%",
-    top: "41.87%",
-    right: "33.31%",
-    bottom: "42.54%",
-    left: "32.8%",
+    height: 150,
+    aspectRatio: 1,
+    alignSelf: "center",
+    marginTop: 10
   },
-  frameChild: {
-    backgroundColor: Color.colorMediumturquoise_100,
-    width: 375,
-    height: 292,
+  frame: {
+  width: "100%",
+  aspectRatio: 1,
+  overflow: "hidden",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: Color.colorMediumturquoise_100, // Apply background color here
   },
+  
+frameChild: {
+  width: "80%",
+  aspectRatio: 1,
+  backgroundColor: Color.colorMediumturquoise_100, // Apply background color here
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+},
   shapeIcon: {
-    width: 254,
-    height: 228,
-  },
-  frameItem: {
-    top: 228,
-    left: 204,
-    width: 100,
-    height: 100,
+    height: 180,
+    width: 200,
+    top: -60,
+    left: -60,
     position: "absolute",
   },
+  frameItem: {
+    top: '47%',
+    width: 150,
+    height: 150,
+    aspectRatio: 1,
+    position: "absolute"
+  },
   welcomeMary: {
-    top: 338,
-    left: 101,
-    color: Color.colorWhite,
-    textAlign: "center",
-    width: 305,
-    opacity: 0.9,
     fontFamily: FontFamily.poppinsBold,
     fontWeight: "700",
     fontSize: FontSize.size_3xl,
-  },
-  frame: {
-    top: -94,
-    left: -66,
-    width: 441,
-    height: 386,
-    position: "absolute",
-    overflow: "hidden",
-  },
-  goVisitMum: {
-    left: 28,
-    fontSize: FontSize.size_mini,
-    position: "absolute",
-  },
-  frameInner: {
-    backgroundColor: Color.colorWhite,
-  },
-  goVisitMumBy4pmParent: {
-    top: 195,
-    width: 189,
-    height: 23,
-  },
-  dailyTasks: {
-    fontSize: 17,
-    color: Color.colorGray_300,
-    top: 0,
-    opacity: 0.9,
-    textAlign: "left",
-    fontFamily: FontFamily.poppinsBold,
-    fontWeight: "700",
-  },
-  plusCircleIcon: {
-    height: "84.62%",
-    width: "7.09%",
-    top: "7.69%",
-    right: "0%",
-    bottom: "7.69%",
-    left: "92.91%",
-  },
-  frame1: {
-    top: 12,
-    height: 26,
-  },
-  rectangleView: {
-    backgroundColor: "#56c5b6",
-  },
-  learnProgrammingBy12amParent: {
-    width: 250,
-    top: 0,
-    left: 0,
-    height: 23,
-  },
-  haveLunchAt3pmParent: {
-    top: 99,
-    width: 173,
-    height: 23,
-  },
-  learnHowToCookBy1pmParent: {
-    top: 33,
-    width: 225,
-    height: 23,
-  },
-  pickUpTheKidsBy2pmParent: {
-    top: 66,
-    width: 209,
-    height: 23,
-  },
-  frameChild4: {
-    top: 10,
-    left: 293,
-    borderRadius: 3,
-    backgroundColor: "#d9d9d9",
-    width: 3,
-    height: 96,
-    position: "absolute",
-  },
-  frame2: {
-    top: 63,
-    height: 122,
+    color: Color.colorWhite,
+    alignSelf: "center",
   },
   frameParent: {
-    top: 529,
+    width: "90%",
+    aspectRatio: 4 / 4,
+    backgroundColor: Color.colorWhite,
+    alignSelf: "center",
     borderRadius: 10,
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: {
@@ -269,18 +219,90 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    width: 335,
-    height: 260,
+    marginTop: 20,
+    padding: 10
+  },
+  goVisitMum: {
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+    fontSize: FontSize.size_mini,
+    color: Color.colorGray_300,
+    opacity: 0.9,
+    alignSelf: "flex-start",
+  },
+  frameInner: {
     backgroundColor: Color.colorWhite,
   },
+  goVisitMumBy4pmParent: {
+    width: "50%",
+    aspectRatio: 8.17,
+  },
+  dailyTasks: {
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+    fontSize: FontSize.size_mini,
+    color: Color.colorGray_300,
+    opacity: 0.9,
+    alignSelf: "flex-start",
+  },
+  plusCircleIcon: {
+    width: 20,
+    height: 20,
+    alignSelf: "flex-end",
+    padding: 10
+  },
+  frame1: {
+    aspectRatio: 10 / 1.15,
+  },
+  frame2: {
+    aspectRatio: 10 / 6.25,
+  },
+  taskParent: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  taskText: {
+    flex: 1,
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+    fontSize: FontSize.size_mini,
+    color: Color.colorGray_300,
+    alignSelf: "flex-start",
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: Color.colorBlack,
+    marginRight: 10,
+  },
   dashboard: {
-    borderRadius: Border.br_31xl,
     backgroundColor: Color.colorWhitesmoke,
     flex: 1,
-    width: "100%",
-    height: 812,
-    overflow: "hidden",
+  },
+   checkedCheckbox: {
+    width: 20,
+    height: 20,
+    backgroundColor: 'green',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'green',
+    marginRight: 10, 
+  },
+
+  completedTaskText: {
+    textDecorationLine: 'line-through',
+    color: 'gray', 
   },
 });
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+    user: state.auth.user
+  }
+};
+
+export default connect(mapStateToProps)(Dashboard);

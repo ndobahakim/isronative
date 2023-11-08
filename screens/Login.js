@@ -1,204 +1,195 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { Text, StyleSheet, View, Pressable, TextInput, KeyboardAvoidingView } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
+import { connect } from 'react-redux';
+import { login } from '../actions/authActions';
+import { useState } from 'react';
 import { FontFamily, Color, FontSize, Border } from "../GlobalStyles";
+import axios from 'axios'
 
-const Login = () => {
+const Login = ({ dispatchLogin }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null);
+  const [token, setToken] = useState(null);
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      setError("All fields are required");
+      return;
+    }
+    axios
+      .post('http://test.ecoforest.green/api/v1/auth/login', { email, password })
+      .then((response) => {
+        const data = response.data;
+        if (data.token) {
+          // Save the token locally
+          setToken(data.token);
+          dispatchLogin( data.user, token );
+          navigation.navigate('Dashboard');
+        } else {
+          setError('Login failed');
+        }
+      })
+      .catch((_error) => {
+        setError('Login failed ');
+      });
+  };
+
   const navigation = useNavigation();
 
   return (
+    <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center' }} behavior="padding">
     <View style={styles.login}>
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Dashboard")}
-      >
-        <Text style={[styles.getStarted, styles.getStartedTypo]}>Login</Text>
-      </Pressable>
       <Image
         style={styles.shapeIcon}
         contentFit="cover"
         source={require("../assets/shape1.png")}
       />
-      <Text style={[styles.welcomeBack, styles.getStartedTypo]}>
-        Welcome Back!
-      </Text>
-      <Pressable
-        style={styles.dontHaveAnContainer}
-        onPress={() => navigation.navigate("Registration")}
-      >
-        <Text style={styles.textTypo}>
-          <Text style={styles.dontHaveAn}>{`Don’t have an account ? `}</Text>
-          <Text style={styles.signUpTypo}>Sign Up</Text>
-        </Text>
-      </Pressable>
-      <Text style={[styles.forgotPassword, styles.signUpTypo]}>
-        Forgot Password?
-      </Text>
-      <View style={[styles.input, styles.inputLayout]}>
-        <View style={styles.inputChild} />
-        <View style={[styles.frame, styles.framePosition]}>
-          <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-            mary.elliot@mail.com
-          </Text>
-        </View>
-        <View style={[styles.frame1, styles.framePosition]}>
-          <Text style={[styles.fullName, styles.fullNameTypo]}>Email</Text>
-        </View>
-      </View>
-      <View style={[styles.input1, styles.inputLayout]}>
-        <View style={styles.inputChild} />
-        <View style={[styles.frame, styles.framePosition]}>
-          <Text style={[styles.maryElliot, styles.fullNameTypo]}>
-            **************
-          </Text>
-        </View>
-        <View style={[styles.frame1, styles.framePosition]}>
-          <Text style={[styles.fullName, styles.fullNameTypo]}>Password</Text>
-        </View>
-      </View>
+      <Text style={[styles.getStarted, styles.getStartedTypo]}>Welcome Back!</Text>
       <Image
         style={styles.undrawAccessAccountRe8spmIcon}
         contentFit="cover"
         source={require("../assets/undraw-access-account-re-8spm-1.png")}
       />
+      <View style={styles.inputContainerMain}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="mary.elliot@mail.com"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="**************"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            />
+        </View>
+        {error && <Text style={styles.errorText}>{error}</Text>}
+        <Pressable style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </Pressable>
+        </View>
+      <Pressable
+        style={styles.dontHaveAnContainer}
+        onPress={() => navigation.navigate("Registration")}
+      >
+        <Text style={styles.dontHaveAn}>Don't have an account?</Text>
+        <Text style={styles.signUpTypo}>Sign Up</Text>
+        </Pressable>
     </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  login: {
+    flex: 1,
+    backgroundColor: Color.colorWhitesmoke,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
   getStartedTypo: {
     textAlign: "center",
     fontFamily: FontFamily.poppinsBold,
     fontWeight: "700",
-    position: "absolute",
+    fontSize: FontSize.size_3xl,
+    color: Color.colorGray_200,
   },
   signUpTypo: {
     color: Color.colorMediumturquoise_100,
     fontFamily: FontFamily.poppinsBold,
     fontWeight: "700",
   },
-  inputLayout: {
-    height: 73,
-    left: 19,
-    width: 335,
-    position: "absolute",
+  inputContainerMain: {
+    marginTop: 30
   },
-  framePosition: {
-    height: 23,
-    left: 0,
-    position: "absolute",
-    overflow: "hidden",
+  inputContainer: {
+    marginBottom: 20,
   },
-  fullNameTypo: {
-    top: "0%",
+  inputLabel: {
+    color: Color.colorGray_300,
     fontFamily: FontFamily.poppinsSemiBold,
     fontWeight: "600",
-    textAlign: "left",
+  },
+  input: {
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
     fontSize: FontSize.size_mini,
-    position: "absolute",
+    color: Color.colorGray_100,
+    borderRadius: Border.br_xl,
+    backgroundColor: Color.colorWhite,
+    height: 50,
+    paddingLeft: 10,
   },
   getStarted: {
-    top: "25%",
-    left: "41.49%",
-    fontSize: FontSize.size_xl,
-    color: Color.colorBlack,
+    fontSize: FontSize.size_3xl,
+    color: Color.colorGray_200,
+    padding: 20
   },
   button: {
-    top: 668,
-    left: 20,
     borderRadius: Border.br_8xs,
     backgroundColor: Color.colorMediumturquoise_100,
     height: 60,
-    width: 335,
-    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontFamily: FontFamily.poppinsBold,
+    fontWeight: "700",
+    fontSize: FontSize.size_xl,
+    color: Color.colorBlack,
   },
   shapeIcon: {
-    width: 254,
-    height: 228,
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
-  welcomeBack: {
-    top: 134,
-    left: 34,
-    fontSize: FontSize.size_3xl,
-    color: Color.colorGray_200,
-    width: 305,
-    opacity: 0.9,
+    width: 200,
+    height: 180,
+    top: -120,
+    left: -100,
+    objectFit: 'cover'
   },
   dontHaveAn: {
     color: Color.colorGray_300,
     fontFamily: FontFamily.poppinsSemiBold,
     fontWeight: "600",
-  },
-  textTypo: {
-    textAlign: "left",
     fontSize: FontSize.size_mini,
+    textAlign: "left",
   },
   dontHaveAnContainer: {
-    left: 65,
-    top: 738,
-    position: "absolute",
+    flexDirection: "row",
+    alignItems: "center",
   },
   forgotPassword: {
-    top: 579,
-    left: 207,
-    textAlign: "left",
+    color: Color.colorGray_300,
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
     fontSize: FontSize.size_mini,
-    position: "absolute",
-  },
-  inputChild: {
-    height: "68.49%",
-    top: "31.51%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    borderRadius: Border.br_xl,
-    backgroundColor: Color.colorWhite,
-    position: "absolute",
-    width: "100%",
-  },
-  maryElliot: {
-    left: "19.39%",
-    color: Color.colorGray_100,
-  },
-  frame: {
-    top: 36,
-    width: 98,
-  },
-  fullName: {
-    left: "20.21%",
-    color: Color.colorBlack,
-  },
-  frame1: {
-    width: 94,
-    top: 0,
-    height: 23,
-  },
-  input: {
-    top: 413,
-  },
-  input1: {
-    top: 496,
+    textAlign: "left",
   },
   undrawAccessAccountRe8spmIcon: {
-    top: 200,
-    left: 97,
     width: 180,
     height: 180,
-    position: "absolute",
-    overflow: "hidden",
+    alignSelf: "center",
   },
-  login: {
-    borderRadius: Border.br_31xl,
-    backgroundColor: Color.colorWhitesmoke,
-    flex: 1,
-    height: 812,
-    overflow: "hidden",
-    width: "100%",
+   errorText: {
+    color: "red",
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
+    fontSize: FontSize.size_mini,
+    textAlign: "center",
+    marginBottom: 10,
   },
 });
 
-export default Login;
+const mapDispatchToProps = {
+  dispatchLogin: login,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
